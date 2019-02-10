@@ -1,0 +1,49 @@
+@value white from "../../styles/colors.css";
+@value  u_xs, u_sm, u_md, u_lg, u_xl, u_v_xs, u_v_sm, u_v_md, u_v_lg, u_v_xl from "../../styles/units.css";
+
+.wrap {
+  display: inline-block;
+  clear: both;
+  position: relative;
+  color: #333333;
+}
+
+.chunk {
+  display: inline-block;
+  position: relative;
+  transform-origin: bottom;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 100%;
+  height: 2px;
+  background: #333333;
+}
+
+.xs {
+  font-size: u_xs;
+  margin-bottom: u_v_xs;
+}
+
+.sm {
+  font-size: u_sm;
+  margin-bottom: u_v_sm;
+}
+
+.md {
+  font-size: u_md;
+  margin-bottom: u_v_md;
+}
+
+.lg {
+  font-size: u_lg;
+  margin-bottom: u_v_lg;
+}
+
+.xl {
+  font-size: u_xl;
+  margin-bottom: u_v_xl;
+}

@@ -1,0 +1,21 @@
+@value white from "../../styles/colors.css";
+@value  u_xs, u_sm, u_md, u_lg, u_xl, u_v_xs, u_v_sm, u_v_md, u_v_lg, u_v_xl from "../../styles/units.css";
+
+.wrap {
+  border-radius: 5px;
+  position: fixed;
+  background: white;
+  padding: u_lg;
+  top: u_lg;
+  right: u_lg;
+  bottom: u_lg;
+  left: u_lg;
+  transform: translate(0, 40%);
+  opacity: 0;
+  color: #333;
+}
+.close {
+  position: absolute;
+  right: u_lg;
+  cursor: pointer;
+}

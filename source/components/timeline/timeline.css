@@ -1,0 +1,41 @@
+@value white from "../../styles/colors.css";
+@value  u_xs, u_sm, u_md, u_lg, u_xl, u_v_xs, u_v_sm, u_v_md, u_v_lg, u_v_xl from "../../styles/units.css";
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(5, 10vh); 
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+}
+
+
+.grid div {
+  position: relative;
+  cursor: pointer;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+.grid span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.years {
+  grid-template-columns: auto auto; 
+}
+
+.months {
+  grid-template-columns: auto auto auto auto; 
+}
+
+.days {
+  grid-template-columns: auto auto auto auto auto auto; 
+  grid-template-columns: auto auto auto auto auto auto auto; 
+}
+
+.highlighted {
+  background: blue
+}

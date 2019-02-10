@@ -1,0 +1,6 @@
+{
+  "name": "my.Only.love",
+  "short_name": "my.Only.love",
+  "start_url": "/",
+  "display": "standalone"
+}
