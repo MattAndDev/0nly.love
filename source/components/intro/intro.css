@@ -1,0 +1,15 @@
+@value white from "../../styles/colors.css";
+@value  u_xs, u_sm, u_md, u_lg, u_xl, u_v_xs, u_v_sm, u_v_md, u_v_lg, u_v_xl from "../../styles/units.css";
+
+.wrap {
+  color: white;
+  font-family : 'Cormorant', 'Helvetica', Arial, sans-serif;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.close {
+  
+}

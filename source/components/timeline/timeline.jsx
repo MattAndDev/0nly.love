@@ -1,5 +1,5 @@
 import { h, Component } from 'preact'
-import style, { grid, highlighted } from './timeline.css'
+import style, { grid, highlighted, back } from './timeline.css'
 import stories from '../../stories'
 
 const start = { day: 12, month: 10, year: 2017 }
@@ -46,23 +46,32 @@ export class Timeline extends Component {
   }
 
   selectDay = (i) => {
+    const { year, month } = this.state
     this.setState({ day: i })
-    const { year, month, day } = this.state
-    this.props.onSelect({ year, month, day })
+    this.props.onSelect({ year, month, day: i })
+  }
+
+  selectMonth = (i) => {
+    this.setState({ month: i, display: 'days' })
+  }
+
+  selectYear = (i) => {
+    this.setState({ year: i, display: 'months' })
   }
 
   render (props, { year, month, day, display }) {
     return (
       <div>
-        {year && <p onClick={this.back}>back</p>}
+        {year && <p className={back} onClick={this.back}>Zrück</p>}
+        {!year && <p className={back} >{'\u00a0'}</p>}
         <div className={`${grid} ${style[display]}`}>
           {!year && calender.map((t) => (
-            <div onClick={() => this.setState({ year: t.year, display: 'months' })}>
+            <div onClick={() => this.selectYear(t.year)}>
               <span>{t.year}</span>
             </div>
           ))}
           {year && month === false && calender.find(y => (y.year === year)).months.map(({ index, highlighted: high }) => (
-            <div className={high && highlighted} onClick={() => this.setState({ month: index, display: 'days' })}>
+            <div className={high && highlighted} onClick={() => this.selectMonth(index)} >
               <span>{new Date(year, index, 1).toLocaleString('de', { month: 'long' })}</span>
             </div>
           ))}

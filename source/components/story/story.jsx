@@ -38,9 +38,9 @@ export class Story extends Component {
     if (show && !isAnimating && !visible) this.show()
     if (!show && !isAnimating && visible) this.hide()
     return (
-      <div style={{ opacity, transform: `translate(0,${translateY}%)` }} class={wrap} >
+      <div style={{ opacity, transform: `translate(0,${translateY}%)`, display: (!show && !isAnimating) ? 'none' : 'block' }} class={wrap} >
         <p className={close} onClick={onClose}>X</p>
-        <Title size='md' show={showTitle} text={story.title} />
+        <Title size='md' toggle={showTitle} text={story.title} />
       </div>
     )
   }

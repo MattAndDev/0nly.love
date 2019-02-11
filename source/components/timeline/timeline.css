@@ -1,10 +1,10 @@
 @value white from "../../styles/colors.css";
 @value  u_xs, u_sm, u_md, u_lg, u_xl, u_v_xs, u_v_sm, u_v_md, u_v_lg, u_v_xl from "../../styles/units.css";
+@value bp-sm from "../../styles/breakpoints.css";
 
 .grid {
   display: grid;
-  grid-template-rows: repeat(5, 10vh); 
-  border-top: 1px solid white;
+  grid-template-rows: auto;
   border-left: 1px solid white;
 }
 
@@ -12,19 +12,21 @@
 .grid div {
   position: relative;
   cursor: pointer;
-  border-right: 1px solid white;
-  border-bottom: 1px solid white;
+  height: 10vh;
+  border: 1px solid white;
+  margin: -1px 0  0 -1px;
 }
 
 .grid span {
   position: absolute;
   top: 50%;
   left: 50%;
+  font-size: u_md;  
   transform: translate(-50%, -50%);
 }
 
 .years {
-  grid-template-columns: auto auto; 
+  grid-template-columns: auto; 
 }
 
 .months {
@@ -32,8 +34,19 @@
 }
 
 .days {
-  grid-template-columns: auto auto auto auto auto auto; 
-  grid-template-columns: auto auto auto auto auto auto auto; 
+  grid-template-columns: auto auto; 
+}
+
+@media bp-sm {
+  .days {
+    grid-template-columns: auto auto auto auto auto auto auto; 
+  }
+}
+
+.back {
+  display: block;
+  text-align: center;
+  cursor: pointer;
 }
 
 .highlighted {

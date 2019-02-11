@@ -1,0 +1,7 @@
+:export {
+  bp-xs: (min-width: 460px);
+  bp-sm: (min-width: 768px);
+  bp-md: (min-width: 1024px);
+  bp-lg: (min-width: 1240px);
+  bp-xl: (min-width: 1400px);
+}

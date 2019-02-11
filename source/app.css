@@ -1,13 +1,14 @@
 @value mojo, white from "./styles/colors.css";
 
 .wrap {
+  position: relative;
   background: mojo;
   padding: u_v_md u_v_md;
   color: white;
   min-width: 100zvw;
   min-height: 100vh;
-  font-family : 'Roboto Slab', 'Helvetica', Arial, sans-serif;
+  font-family : 'Helvetica', Arial, sans-serif;
 }
 p {
-  margin-top: 0;
+  margin-top: 0
 }
