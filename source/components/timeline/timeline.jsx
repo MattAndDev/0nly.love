@@ -1,33 +1,18 @@
 import { h, Component } from 'preact'
 import style, { grid, highlighted, back } from './timeline.css'
+import { generate } from '../../api/calendar'
 import stories from '../../stories'
+import { TimelineItem } from './timeline-item'
 
 const start = { day: 12, month: 10, year: 2017 }
-var today = new Date()
-const end = { day: today.getDate(), month: today.getMonth() + 1, year: today.getFullYear() }
-
-const calender = new Array(end.year - start.year + 1).fill(null).map((_, i) => {
-  const skipMonths = (i === 0) ? start.month : (i === end.year - start.year) ? (12 - end.month) : 0
-  return {
-    year: start.year + i,
-    months: new Array(12 - skipMonths).fill().map((_, month) => {
-      if (i === 0) month += skipMonths
-      const nDays = new Date(start.year + i, month + 1, 0).getDate()
-      let highlighted = false
-      return {
-        days: new Array(nDays).fill().map((_, day) => {
-          if (stories[`${start.year + i}_${month}_${day}`]) highlighted = true
-          return {
-            index: day,
-            highlighted: stories[`${start.year + i}_${month}_${day}`]
-          }
-        }),
-        index: month,
-        highlighted
-      }
-    })
-  }
-})
+const calendar = generate(start)
+console.log(calendar)
+for (var i = 0; i < stories.length; i++) {
+  const [year, month, day] = stories[i].date.split('_')
+  const yearIndex = calendar.findIndex(y => y.year === parseInt(year))
+  calendar[yearIndex].months[month].days[day].highlighted = true
+  calendar[yearIndex].months[month].highlighted = true
+}
 
 export class Timeline extends Component {
   state = {
@@ -45,43 +30,61 @@ export class Timeline extends Component {
     this.setState({ year: false, display: 'years' })
   }
 
-  selectDay = (i) => {
-    const { year, month } = this.state
-    this.setState({ day: i })
-    this.props.onSelect({ year, month, day: i })
+  get = () => {
+    const { year, month, display } = this.state
+    if (display === 'days') {
+      return calendar.find(y => (y.year === year)).months
+        .find((m, i) => i === month).days.map((d, i) => ({
+          text: new Date(year, month, i + 1).toLocaleString('de', { weekday: 'long' }),
+          ...d
+        }))
+    }
+    if (display === 'months') {
+      return calendar.find(y => (y.year === year)).months.map((m, i) => ({
+        text: new Date(year, i, 1).toLocaleString('de', { month: 'long' }),
+        ...m
+      }))
+    }
+    return calendar.map(y => ({ text: y.year, ...y }))
   }
 
-  selectMonth = (i) => {
-    this.setState({ month: i, display: 'days' })
+  select = (i) => {
+    this.setState({ hiding: true })
+    if (this.state.display === 'days') {
+      return this.setState({ day: i })
+    }
+    if (this.state.display === 'months') {
+      return this.setState({ month: i, _display: 'days' })
+    }
+    return this.setState({ year: this.get()[i].year, _display: 'months' })
   }
 
-  selectYear = (i) => {
-    this.setState({ year: i, display: 'months' })
+  setVisibility = () => {
+    this.setState({ display: this.state._display })
+    this.setState({ hiding: false })
   }
 
-  render (props, { year, month, day, display }) {
+  render (props, { year, month, day, display, hiding }) {
     return (
       <div>
         {year && <p className={back} onClick={this.back}>Zrück</p>}
         {!year && <p className={back} >{'\u00a0'}</p>}
         <div className={`${grid} ${style[display]}`}>
-          {!year && calender.map((t) => (
-            <div onClick={() => this.selectYear(t.year)}>
-              <span>{t.year}</span>
-            </div>
-          ))}
-          {year && month === false && calender.find(y => (y.year === year)).months.map(({ index, highlighted: high }) => (
-            <div className={high && highlighted} onClick={() => this.selectMonth(index)} >
-              <span>{new Date(year, index, 1).toLocaleString('de', { month: 'long' })}</span>
-            </div>
-          ))}
-          {month !== false && calender.find(y => (y.year === year)).months.find((m) => m.index === month).days.map((_, i) => (
-            <div className={_.highlighted && highlighted} onClick={() => { this.selectDay(i) }}>
-              <span>{new Date(year, month, i + 1).toLocaleString('de', { weekday: 'long' })}</span>
-            </div>
+          {this.get().map(({ text, highlighted }, i) => (
+            <TimelineItem
+              onShown={() => { console.log('weeeeew') }}
+              text={text}
+              hide={hiding}
+              highlighted={highlighted}
+              delayIn={i * 20}
+              delayOut={i * 1}
+              onHidden={(i === this.get().length - 1) && this.setVisibility}
+              onClick={() => this.select(i)}
+            />
           ))}
         </div>
       </div>
     )
   }
 }
+
